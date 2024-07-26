@@ -1,0 +1,89 @@
+﻿@model List<VendorManagement.Models.Entities.Vendor>
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>All Vendors</h1>
+    </div>
+</div>
+
+
+<div class="container py-5">
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>VendorName</th>
+                    <th>VendorContactEmail</th>
+                    <th>DepartmentalOwnerEmail</th>
+                    <th>ContractDate</th>
+                    <th>ContractCycle</th>
+                    <th>AuditDate</th>
+                    <th>AuditCycle</th>
+                    <th>CriticalityLevel</th>
+                    <th>VendorType</th>
+                    <th>VendorSharedData</th>
+                    <th>Audits</th>
+                    <th>AssignedAssessments</th>                    
+                    <th></th>                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var vendor in Model)
+                {
+                    <tr>
+                        <td>@vendor.VendorId</td>
+                        <td>@vendor.VendorName</td>
+                        <td>@vendor.VendorContactEmail</td>
+                        <td>@vendor.DepartmentalOwnerEmail</td>
+                        <td>@vendor.ContractDate</td>
+                        <td>@vendor.ContractCycle.ContractCycleType</td>
+                        <td>@vendor.AuditDate</td>
+                        <td>@vendor.AuditCycle.AuditCycleType</td>
+                        <td>@vendor.CriticalityLevel.Level</td>
+                        <td>@vendor.VendorType.Type</td>                                                                        
+                        <td>
+                            <div class="d-flex">
+                                @foreach (var VendorSharedData in vendor.VendorSharedData)
+                                {
+                                    <span class="badge bg-secondary me-1">@VendorSharedData.SharedData</span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex">
+                                @foreach (var Audit in vendor.Audits)
+                                {
+                                    <span class="badge bg-secondary me-1">@Audit.AuditDate</span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex">
+                                @foreach (var AssignedAssessment in vendor.AssignedAssessments)
+                                {
+                                    <span class="badge bg-secondary me-1">@AssignedAssessment.AssessmentId</span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <a asp-area=""
+                               asp-controller="Vendor"
+                               asp-action="EditVendor"
+                               asp-route-id="@vendor.VendorId">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No Vendors Found!</p>
+    }
+</div>

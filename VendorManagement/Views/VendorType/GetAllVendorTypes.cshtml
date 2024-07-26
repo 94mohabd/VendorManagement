@@ -1,0 +1,46 @@
+﻿@model List<VendorManagement.Models.Entities.VendorType>
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>All Vendor Types</h1>
+    </div>
+</div>
+
+
+<div class="container py-5">
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>VendorTypeId</th>
+                    <th>Type</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var vendorType in Model)
+                {
+                    <tr>
+                        <td>@vendorType.VendorTypeId</td>
+                        <td>@vendorType.Type</td>
+                        <td>
+                            <a asp-area=""
+                               asp-controller="VendorType"
+                               asp-action="EditVendorType"
+                               asp-route-id="@vendorType.VendorTypeId">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No Vendor Types Found!</p>
+    }
+</div>

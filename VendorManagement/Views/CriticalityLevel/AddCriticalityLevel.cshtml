@@ -1,0 +1,28 @@
+﻿@model VendorManagement.Models.ViewModels.AddCriticalityLevelViewModel
+
+@{ 
+}
+<h1>Add Criticality Level</h1>
+<hr />
+
+<form asp-action="AddCriticalityLevel" method="post">
+    <div class="form-group mb-3">
+        <label asp-for="CriticalityLevelId" class="control-label"></label>
+        <input asp-for="CriticalityLevelId" class="form-control" readonly />
+        <span asp-validation-for="CriticalityLevelId" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Level" class="control-label"></label>
+        <input asp-for="Level" class="form-control" />
+        <span asp-validation-for="Level" class="text-danger"></span>
+    </div>   
+    <div class="form-group mb-3">
+        <input type="submit" value="Add Contract Cycle" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

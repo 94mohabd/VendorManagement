@@ -1,0 +1,458 @@
+﻿@model VendorManagement.Models.ViewModels.EditAssessmentViewModel
+@using VendorManagement.Models.Entities
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<style>
+    .assessment-preview {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-top: 32px;
+        height: 800px;
+        overflow: auto;
+    }
+
+    #questionsList,
+    #headersList {
+        padding: 10px;
+        height: 800px;
+        overflow: auto;
+        border: 1px solid #ddd;
+    }
+
+    .draggable {
+        background-color: #f0f0f0;
+        padding: 10px;
+        margin-bottom: 5px;
+        cursor: grab;
+    }
+
+        .draggable:hover {
+            background-color: #e0e0e0;
+        }
+
+    .gu-mirror {
+        position: fixed !important;
+        margin: 0 !important;
+        z-index: 9999 !important;
+        opacity: 0.8;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+        filter: alpha(opacity=80);
+    }
+
+    .gu-hide {
+        display: none !important;
+    }
+
+    .gu-unselectable {
+        -webkit-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
+    }
+
+    .gu-transit {
+        opacity: 0.2;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+        filter: alpha(opacity=20);
+    }
+
+    .list-group-item{
+        background-color: inherit;
+    }
+</style>
+<div class="container-fluid">
+    <h1>Edit Assessment</h1>
+    <div class="row">
+        <!-- Assembly Section -->
+        <div class="col-md-8">            
+            <button type="button" class="btn btn-success mt-3" id="saveAssessment">Save Assessment</button>
+            <div>
+                <label for="assessmentTitle">Assessment Title:</label>
+                <input type="text" id="assessmentTitle" class="form-control" placeholder="Enter assessment title" value="@Model.Title">
+            </div>
+            <div class="assessment-preview" id="assessmentPreview">
+                <ul id="items" class="items list-group" style="min-height: 750px;">
+                    @foreach (var item in Model.Assessment.AssessmentItems)
+                    {
+                        @if (item.ItemType.ToLower() == "header")
+                        {
+                            <li id="item" class="list-group-item draggable">
+                                <span id="itemText" class="header-text" data-id="@item.AssessmentItemId" data-type="header">@item.ItemText</span>
+                            </li>
+                        }
+                        else if (item.ItemType.ToLower() == "question")
+                        {
+                            <li id="item" class="list-group-item draggable">
+                                <span id="itemText" data-id="@item.AssessmentItemId" data-Questiontype="@item.QuestionTypeId" data-type="question">@item.ItemText</span>
+                                <ul id="answers" class="list-group">
+                                    @foreach (var answer in item.AssessmentAnswers)
+                                    {
+                                        <li id="@answer.AssessmentAnswerId" class="list-group-item">
+                                            <input type="@item.QuestionType.Type" disabled />
+                                            <span id="answerText" data-id="@answer.AssessmentAnswerId">@answer.AnswerText</span>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <!-- Management Section -->
+        <div class="col-md-4">
+            <ul class="nav nav-tabs" id="managementTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="questions-tab" data-toggle="tab" href="#questions" role="tab" aria-controls="questions" aria-selected="true">Questions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="headers-tab" data-toggle="tab" href="#headers" role="tab" aria-controls="headers" aria-selected="false">Headers</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="managementTabsContent">
+                <!-- Questions Tab -->
+                <div class="tab-pane fade show active" id="questions" role="tabpanel" aria-labelledby="questions-tab">
+                    <h3>Questions</h3>
+                    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#questionModal">Add Question</button>
+                    <ul class="list-group" id="questionsList">
+                        @foreach (var question in Model.Questions)
+                        {
+                            <li id="item" class="list-group-item draggable">
+                                <span id="itemText" data-id="@question.QuestionId" data-Questiontype="@question.QuestionTypeId" data-type="question">@question.QuestionText</span>
+                                <ul id="answers" class="list-group d-none">
+                                    @foreach (var answer in question.Answers)
+                                    {
+                                        <li id="@answer.AnswerId" class="list-group-item">
+                                            <input type="@question.QuestionType.Type" disabled />
+                                            <span id="answerText" data-id="@answer.AnswerId">@answer.AnswerText</span>
+                                        </li>                                        
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <!-- Headers Tab -->
+                <div class="tab-pane fade" id="headers" role="tabpanel" aria-labelledby="headers-tab">
+                    <h3>Headers</h3>
+                    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#headerModal">Add Header</button>
+                    <ul class="list-group" id="headersList">
+                        @foreach (var header in Model.Headers)
+                        {                            
+                            <li id="item" class="list-group-item draggable">
+                                <span id="itemText" class="header-text" data-id="@header.HeaderId" data-type="header">@header.HeaderText</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Question Modal -->
+<div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="questionModalLabel">Add Question</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="questionText">Question Text</label>
+                    <input type="text" class="form-control" id="newQuestionText">
+                </div>
+                <div class="form-group">
+                    <label for="questionType">Question Type</label>
+                    <select class="form-control" id="questionType">
+                        @foreach (var questinType in Model.QuestionTypes)
+                        {
+                            <option value="@questinType.QuestionTypeId">@questinType.Type</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="answers">Answers</label>
+                    <div id="answersList">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" name="answers[]" placeholder="Answer text">
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-danger remove-answer">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="addAnswer">Add Answer</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveQuestion">Save Question</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Header Modal -->
+<div class="modal fade" id="headerModal" tabindex="-1" role="dialog" aria-labelledby="headerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="headerModalLabel">Add Header</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="headerTitle">Header Title</label>
+                    <input type="text" class="form-control" id="headerTitle">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveHeader">Save Header</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            // Add header button click event
+            $('#saveHeader').click(function () {
+                var headerTitle = $('#headerTitle').val();
+                addHeader(headerTitle);
+                $('#headerModal').modal('hide');
+            });
+
+            // Add answer button click event
+            $('#addAnswer').click(function () {
+                addAnswerField();
+            });
+
+            // Remove answer field event
+            $(document).on('click', '.remove-answer', function () {
+                $(this).closest('.input-group').remove();
+            });
+
+            // Save question button click event
+            $('#saveQuestion').click(function () {
+                var questionText = $('#newQuestionText').val();
+                var questionType = $('#questionType').val();
+                var answers = $('#answersList input[name="answers[]"]').map(function () {
+                    return $(this).val();
+                }).get();
+                saveQuestion(questionText, questionType, answers);
+            });
+
+            // Handle drag and drop
+            handleDragAndDrop();
+
+            // Create assessment button click event
+            $('#saveAssessment').click(function () {
+                saveAssessment();
+            });
+        });
+
+        // Function to handle adding a header
+        function addHeader(headerTitle) {
+            fetch('/Assessments/AddHeader', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*'
+                },
+                body: JSON.stringify({
+                    HeaderText: headerTitle
+                })
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // Parse JSON content of the response
+                })
+                .then((data) => {
+                    if (data.success) {                       
+                        // Add header to the list
+                        var headerHtml = '<li id="item" class="list-group-item draggable">' +
+                            '<span id="itemText" class="header-text" data-id="' + data.header.headerId + '" data-type="header">' +
+                            data.header.headerText +
+                            '</span></li>';
+                        $('#headersList').append(headerHtml);
+
+                        // Reset modal fields
+                        $('#headerTitle').val('');
+
+                        // Close modal
+                        $('#headerModal').modal('hide');
+                    } else {
+                        // Handle errors
+                        alert('Error: ' + data.errors.join(', '));
+                    }
+                })
+                .catch((error) => {
+                    console.error('There was a problem with the fetch operation:', error);
+                    alert('An error occurred while adding the header.');
+                });
+        }
+
+
+        // Function to handle adding an answer field
+        function addAnswerField() {
+            $('#answersList').append(
+                '<div class="input-group mb-2">' +
+                '<input type="text" class="form-control" name="answers[]" placeholder="Answer text">' +
+                '<div class="input-group-append">' +
+                '<button type="button" class="btn btn-danger remove-answer">Remove</button>' +
+                '</div>' +
+                '</div>'
+            );
+        }
+
+        // Function to handle saving a question
+        function saveQuestion(questionText, questionType, answers) {
+            fetch('/Assessments/AddQuestion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*'
+                },
+                body: JSON.stringify({
+                    QuestionTypeId: questionType,
+                    QuestionText: questionText,
+                    Answers: answers
+                })
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // Parse JSON content of the response
+                })
+                .then((data) => {
+                    if (data.success) {
+                        console.log(data);
+                        // Add Question to the list
+                        var questionHtml =
+                            '<li id="item" class="list-group-item draggable">' +
+                            '<span id="itemText" data-id="' + data.questionResponse.questionId +
+                            '" data-questiontype="' + data.questionResponse.questionTypeId +
+                            '" data-type="question">' +
+                            data.questionResponse.questionText +
+                            '</span>' +
+                            '<ul id="answers" class="list-group d-none">';
+
+                        data.questionResponse.answers.forEach(function (answer) {
+                            questionHtml +=
+                                '<li id="' + answer.answerId + '" class="list-group-item">' +
+                                '<input type="' + data.questionResponse.questionType + '" disabled>' +
+                                '&nbsp;<span id="answerText" data-id="' + answer.answerId + '">' + answer.answerText + '</span>' +
+                                '</li>';
+                        });
+
+                        questionHtml += '</ul></li>';
+
+                        $('#questionsList').append(questionHtml);
+                        $('#questionModal').modal('hide');
+                        // Reset modal fields
+                        $('#newQuestionText').val('');
+                        $('#questionType').val('1');
+                        $('#answersList').empty();
+                        addAnswerField();
+
+                        // Close modal
+                    } else {
+                        // Handle errors
+                        alert('Error: ' + data.errors.join(', '));
+                    }
+                })
+                .catch((error) => {
+                    console.error('There was a problem with the fetch operation:', error);
+                    alert('An error occurred while adding the question.');
+                });
+        }
+
+        // Function to handle dragging and dropping of items
+        function handleDragAndDrop() {
+            const containers = [document.getElementById('questionsList'), document.getElementById('headersList'), document.getElementById('items')];
+            const dragulaInstance = dragula(containers);
+
+            // Optional: Customize drag and drop behavior
+            dragulaInstance.on('drop', (el, target, source, sibling) => {
+                $('#tempText').hide();
+                const answersDiv = el.querySelector('#answers');
+                if (answersDiv) {
+                    if (target.id === 'items') {
+                        // If dropped in the 'items' container, show the answers
+                        answersDiv.classList.remove('d-none');
+                    } else {
+                        // If dropped in any other container, hide the answers
+                        answersDiv.classList.add('d-none');
+                    }
+                }
+            });
+        }
+
+        // Function to create the assessment
+        function saveAssessment() {
+            var assessmentId = @Model.AssessmentId;
+            var assessmentTitle = $('#assessmentTitle').val().trim();
+            var items = [];
+
+            // Iterate over each item in the #assessmentPreview container
+            $('#items #item').each(function () {
+                var item = $(this).find('#itemText');
+                var itemId = item.data('id');
+                var itemType = item.data('type');
+                var QuestionTypeId = item.data('questiontype');
+                var itemText = item.text().trim();
+                
+                items.push({
+                    Id: itemId,
+                    Type: itemType,
+                    QuestionTypeId: QuestionTypeId,
+                    Text: itemText
+                });
+            });
+
+            // Send assessment data to the server (AJAX, form submission, etc.)
+            console.log({
+                AssessmentId: assessmentId,
+                Title: assessmentTitle,
+                items: items
+            });
+            $.ajax({
+                url: '/Assessments/EditAssessment',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    AssessmentId: assessmentId,
+                    Title: assessmentTitle,
+                    items: items
+                }),
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = '/Assessments/AssessmentDetails?assessmentId=' + (JSON.stringify(response.selectedAssessmentId));
+                    } else {
+                        alert(response.errors);
+                    }
+                },
+                error: function (error) {
+                    console.error('Error saving assessment:', error);
+                }
+            });
+        }
+    </script>
+}

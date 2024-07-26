@@ -1,0 +1,46 @@
+﻿@model List<VendorManagement.Models.Entities.CriticalityLevel>
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>All Criticality Levels</h1>
+    </div>
+</div>
+
+
+<div class="container py-5">
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>CriticalityLevelId</th>
+                    <th>Level</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var criticalityLevel in Model)
+                {
+                    <tr>
+                        <td>@criticalityLevel.CriticalityLevelId</td>
+                        <td>@criticalityLevel.Level</td>
+                        <td>
+                            <a asp-area=""
+                               asp-controller="CriticalityLevel"
+                               asp-action="EditCriticalityLevel"
+                               asp-route-id="@criticalityLevel.CriticalityLevelId">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No Criticality Levels Found!</p>
+    }
+</div>

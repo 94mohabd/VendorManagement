@@ -1,0 +1,117 @@
+﻿@model VendorManagement.Models.ViewModels.AssessmentDetailsViewModel
+@using VendorManagement.Models.Entities
+<link rel="stylesheet" href="~/css/Views/VendorManagement/Vendors.css" />
+
+<style>
+    .assessment-preview {
+        /* border: 1px solid #ddd; */
+        padding: 15px;
+        margin-top: 32px;
+        height: 800px;
+        overflow: auto;
+    }
+</style>
+<div class="section px-5">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left">
+        <span style="color: #4F9AD2; font-size: 20px;">Assessment Details</span>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left" style="height: 20px;"></div>
+    <div class="candidate-list-box card mt-4">
+        <div class="p-4 card-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="candidate-list-content mt-3 mt-lg-0">
+                        <div class="fs-19 mb-0">
+                            <h5 class="fs-19 mb-0">Assessment Title</h5>
+                            <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                <span class="badge bg-soft-secondary fs-14 mt-1">@Model.Title</span>
+                            </div>
+                            @if (Model.IsTemplate)
+                            {
+                                <span class="badge ms-1" style="background: #fdcd53;">Template</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="fs-19 mb-0">Assigned To</h5>
+                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                        @if (Model.AssignedAssessmentCount > 0)
+                        {
+                            <span class="badge bg-soft-secondary fs-14 mt-1">@Model.AssignedAssessmentCount @(Model.AssignedAssessmentCount > 1 ? "Vendors" : "Vendor")</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-soft-secondary fs-14 mt-1">Not Assigned</span>
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="fs-19 mb-0">Create Date</h5>
+                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                        <span class="badge bg-soft-secondary fs-14 mt-1" href="#">@Model.CreateDate.ToShortDateString()</span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <a class="badge bg-soft-primary fs-14 mt-1" asp-controller="Assessments" asp-action="EditAssessment" asp-route-assessmentId="@Model.AssessmentId">Edit</a>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-success mt-3" vendor-id="@Model.AssessmentId" data-bs-toggle="modal" data-bs-target="#assignAssessmentModal">Assign to vendor</button>
+    <div class="candidate-list-box card mt-4">
+        <div class="assessment-preview" id="assessmentPreview">
+            <ul class="list-group">
+                @foreach (var item in Model.OrderedItems)
+                {
+                    <li class="list-group-item">
+                        @if (item.ItemType.ToLower() == "header")
+                        {                            
+                            <span class="header-text">@item.ItemText</span>
+                        }
+                        else if (item.ItemType.ToLower() == "question")
+                        {                            
+                            <span class="question-text">@item.ItemText</span>
+                            <ul class="list-group">
+                                @foreach (var answer in item.AssessmentAnswers)
+                                {
+                                    <li class="list-group-item">
+                                        <input type="radio" disabled />
+                                        <span class="answer-text">@answer.AnswerText</span>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<!-- assignAssessmentModal -->
+<div class="modal fade" id="assignAssessmentModal" tabindex="-1" aria-labelledby="assignAssessmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="assignAssessmentModalLabel">Assign New Assessment</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="AssignAssessment" method="post">
+                    <input id="AssessmentId" type="hidden" asp-for="AssessmentId" />
+                    <div class="form-group mb-3">
+                        <label asp-for="SelectedVendorId" class="form-label">Select Vendor</label>
+                        <select asp-for="SelectedVendorId" asp-items="@(new SelectList(Model.Vendors, "VendorId", "VendorName"))" class="form-control"></select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" value="Assign Assessment" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

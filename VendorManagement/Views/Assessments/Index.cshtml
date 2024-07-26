@@ -1,0 +1,121 @@
+﻿@model List<VendorManagement.Models.Entities.Assessment>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="~/css/Views/VendorManagement/Vendors.css" />
+
+
+<div id="navigation-links-select" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left" style="height: 10px;"></div>
+    <form id="navigation-form">
+        <select id="navigation-select" onchange="this.form.action=this.value; this.form.submit();">
+            <option value="/VendorManagement/Dashboard">DASHBOARD</option>
+            <option value="/VendorManagement/Vendors">VENDORS</option>
+            <option selected value="/Assessments/Index">ASSESSMENTS</option>
+        </select>
+    </form>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left" style="height: 10px;"></div>
+<div id="navigation-links" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <a asp-controller="VendorManagement" asp-action="Dashboard">DASHBOARD</a>
+    <div class="underline"></div>
+    <a asp-controller="VendorManagement" asp-action="Vendors">VENDORS</a>
+    <div class="underline"></div>
+    <a class="active" asp-controller="Assessments" asp-action="Index">ASSESSMENTS</a>
+    <div class="underline"></div>
+</div>
+<div id="line"></div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 10px;"></div>
+<section class="section px-5">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left">
+        <span style="color: #4F9AD2; font-size: 20px;">Assessment Management</span>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left" style="height: 20px;"></div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-right">
+        <a asp-controller="Assessments" asp-action="CreateAssessment">
+            <div class="text-center yellowbuttons">
+                <span style="color: grey;">Add Assessment</span>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left" style="height: 20px;"></div>
+    <div class="row">
+        <div class="candidate-list">
+            @if (Model != null && Model.Any())
+            {
+                <table id="assessmentsTable" class="display">
+                    <thead style="display: none;">
+                        <tr>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var assessment in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="candidate-list-box card">
+                                        <a class="row-link" asp-controller="Assessments" asp-action="AssessmentDetails" asp-route-assessmentId="@assessment.AssessmentId">
+                                            <div class="p-4 card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="candidate-list-content mt-3 mt-lg-0">
+                                                            <h5 class="fs-19 mb-0">
+                                                                <h5 class="fs-19 mb-0">Assessment Title</h5>
+                                                                <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                                                    <span class="badge bg-soft-secondary fs-14 mt-1">@assessment.Title</span>
+                                                                </div>
+                                                                @if (assessment.IsTemplate)
+                                                                {
+                                                                    <span class="badge ms-1" style="background: #fdcd53;">Template</span>
+                                                                }                                                               
+                                                            </h5>                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <h5 class="fs-19 mb-0">Assigned To</h5>
+                                                        <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                                            @if (assessment.AssignedAssessments.Any())
+                                                            {
+                                                                <span class="badge bg-soft-secondary fs-14 mt-1">@assessment.AssignedAssessments.Count() @(assessment.AssignedAssessments.Count() > 1 ? "Vendors" : "Vendor")</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge bg-soft-secondary fs-14 mt-1">Not Assigned</span>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <h5 class="fs-19 mb-0">Create Date</h5>
+                                                        <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                                            <span class="badge bg-soft-secondary fs-14 mt-1" href="#">@assessment.CreateDate.ToShortDateString()</span>
+                                                        </div>
+                                                    </div>                                                                                                       
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No Vendors Found!</p>
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            let assessmentsTable = new DataTable('#assessmentsTable');
+        });
+
+    </script>
+}

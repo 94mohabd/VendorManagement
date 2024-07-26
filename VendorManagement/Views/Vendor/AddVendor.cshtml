@@ -1,0 +1,71 @@
+﻿@model VendorManagement.Models.ViewModels.AddVendorViewModel
+
+@{
+}
+<h1>Add Contract Cycle</h1>
+<hr />
+
+<form asp-action="AddVendor" method="post">
+    <div class="form-group mb-3">
+        <label asp-for="VendorName" class="form-label">Vendor Name</label>
+        <input asp-for="VendorName" class="form-control" />
+        <span asp-validation-for="VendorName" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="VendorContactEmail" class="form-label">Vendor Contact Email</label>
+        <input asp-for="VendorContactEmail" class="form-control" />
+        <span asp-validation-for="VendorContactEmail" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="DepartmentalOwnerEmail" class="form-label">Departmental Owner Email</label>
+        <input asp-for="DepartmentalOwnerEmail" class="form-control" />
+        <span asp-validation-for="DepartmentalOwnerEmail" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="ContractDate" class="form-label">Contract Date</label>
+        <input asp-for="ContractDate" class="form-control" />
+        <span asp-validation-for="ContractDate" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="AuditDate" class="form-label">Audit Date</label>
+        <input asp-for="AuditDate" class="form-control" />
+        <span asp-validation-for="AuditDate" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <div>
+            <span asp-validation-for="SelectedContractCycleId" class="text-danger"></span>
+        </div>
+        <label asp-for="SelectedContractCycleId" class="form-label">Contract Cycle</label>
+        <select asp-for="SelectedContractCycleId" asp-items="@(new SelectList(Model.ContractCycles ?? new List<VendorManagement.Models.Entities.ContractCycle>(), "ContractCycleId", "ContractCycleType"))" class="form-control"></select>
+    </div>
+    <div class="form-group mb-3">
+        <div>
+            <span asp-validation-for="SelectedAuditCycleId" class="text-danger"></span>
+        </div>
+        <label asp-for="SelectedAuditCycleId" class="form-label">Audit Cycle</label>
+        <select asp-for="SelectedAuditCycleId" asp-items="@(new SelectList(Model.AuditCycles ?? new List<VendorManagement.Models.Entities.AuditCycle>(), "AuditCycleId", "AuditCycleType"))" class="form-control"></select>
+    </div>
+    <div class="form-group mb-3">
+        <div>
+            <span asp-validation-for="SelectedCriticalityLevelId" class="text-danger"></span>
+        </div>
+        <label asp-for="SelectedCriticalityLevelId" class="form-label">Criticality Level</label>
+        <select asp-for="SelectedCriticalityLevelId" asp-items="@(new SelectList(Model.CriticalityLevels ?? new List<VendorManagement.Models.Entities.CriticalityLevel>(), "CriticalityLevelId", "Level"))" class="form-control"></select>
+    </div>
+    <div class="form-group mb-3">
+        <div>
+            <span asp-validation-for="SelectedVendorTypeId" class="text-danger"></span>
+        </div>
+        <label asp-for="SelectedVendorTypeId" class="form-label">Vendor Type</label>
+        <select asp-for="SelectedVendorTypeId" asp-items="@(new SelectList(Model.VendorTypes ?? new List<VendorManagement.Models.Entities.VendorType>(), "VendorTypeId", "Type"))" class="form-control"></select>
+    </div>
+    <div class="form-group mb-3">
+        <input type="submit" value="Add Vendor" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

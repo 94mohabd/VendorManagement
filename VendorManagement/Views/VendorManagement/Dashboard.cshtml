@@ -1,0 +1,368 @@
+﻿<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="~/css/Views/VendorManagement/Dashboard.css" />
+
+
+<div id="navigation-links-select" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left" style="height: 10px;"></div>
+    <form id="navigation-form">
+        <select id="navigation-select" onchange="this.form.action=this.value; this.form.submit();">
+            <option selected value="/VendorManagement/Dashboard">DASHBOARD</option>
+            <option value="/VendorManagement/Vendors">VENDORS</option>
+            <option value="/Assessments/Index">ASSESSMENTS</option>
+        </select>
+    </form>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left" style="height: 10px;"></div>
+<div id="navigation-links" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <a class="active" asp-controller="VendorManagement" asp-action="DASHBOARD">DASHBOARD</a>
+    <div class="underline"></div>
+    <a asp-controller="VendorManagement" asp-action="Vendors">VENDORS</a>
+    <div class="underline"></div>
+    <a asp-controller="Assessments" asp-action="Index">ASSESSMENTS</a>
+    <div class="underline"></div>
+</div>
+<div id="line"></div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 10px;"></div>
+<div>
+    <div class="row" style="background-color: white; margin: auto;">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin: 20px auto auto auto;">          
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <span style="color: #4F9AD2; font-size: 20px;">Data Exposure</span>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 10px;"></div>
+            <div id="data-category" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="box">
+                    <div class="box-body">
+                        <img src="~/images/VendorIcons/contact-info.png" width="50" height="50">
+                        <div class="box-text">
+                            <div class="vendor-number">@ViewBag.NotificationContactInformation.Count</div>
+                            <div>Contact Information</div>
+                        </div>
+                    </div>
+                    <button class="view-button" onclick="showVendorModalFor(0);">View Vendors</button>
+                </div>
+                <div class="box">
+                    <div class="box-body">
+                        <img src="~/images/VendorIcons/general-info.png" width="50" height="50">
+                        <div class="box-text">
+                            <div class="vendor-number">@ViewBag.NotificationGeneralInformation.Count</div>
+                            <div>General Information</div>
+                        </div>
+                    </div>
+                    <button class="view-button" onclick="showVendorModalFor(1);">View Vendors</button>
+                </div>
+                <div class="box">
+                    <div class="box-body">
+                        <img src="~/images/VendorIcons/finacial-data.png" width="50" height="50">
+                        <div class="box-text">
+                            <div class="vendor-number">@ViewBag.NotificationFinancialData.Count</div>
+                            <div>Financial Data</div>
+                        </div>
+                    </div>
+                    <button class="view-button" onclick="showVendorModalFor(2);">View Vendors</button>
+                </div>
+                <div class="box">
+                    <div class="box-body">
+                        <img src="~/images/VendorIcons/id-numbers.png" width="50" height="50">
+                        <div class="box-text">
+                            <div class="vendor-number">@ViewBag.NotificationIdentificationNumbers.Count</div>
+                            <div>ID Numbers</div>
+                        </div>
+                    </div>
+                    <button class="view-button" onclick="showVendorModalFor(3);">View Vendors</button>
+                </div>
+                <div class="box">
+                    <div class="box-body">
+                        <img src="~/images/VendorIcons/web-browsing.png" width="50" height="50">
+                        <div class="box-text">
+                            <div class="vendor-number">@ViewBag.NotificationWebBrowsingData.Count</div>
+                            <div>Web Browsing</div>
+                        </div>
+                    </div>
+                    <button class="view-button" onclick="showVendorModalFor(4);">View Vendors</button>
+                </div>
+                <div class="box">
+                    <div class="box-body">
+                        <img src="~/images/VendorIcons/human-resources.png" width="50" height="50">
+                        <div class="box-text">
+                            <div class="vendor-number">@ViewBag.NotificationHumanResources.Count</div>
+                            <div>Human Resources</div>
+                        </div>
+                    </div>
+                    <button class="view-button" onclick="showVendorModalFor(5);">View Vendors</button>
+                </div>
+                <div class="box">
+                    <div class="box-body">
+                        <img src="~/images/VendorIcons/medical-insurance.png" width="50" height="50">
+                        <div class="box-text">
+                            <div class="vendor-number">@ViewBag.NotificationMedicalHealth.Count</div>
+                            <div>Medical/Insurance</div>
+                        </div>
+                    </div>
+                    <button class="view-button" onclick="showVendorModalFor(6);">View Vendors</button>
+                </div>
+                <div class="box">
+                    <div class="box-body">
+                        <img src="~/images/VendorIcons/biometric.png" width="50" height="50">
+                        <div class="box-text">
+                            <div class="vendor-number">@ViewBag.NotificationBiometricGenetic.Count</div>
+                            <div>Biometric/Genetic</div>
+                        </div>
+                    </div>
+                    <button class="view-button" onclick="showVendorModalFor(7);">View Vendors</button>
+                </div>
+                <div class="box">
+                    <div class="box-body">
+                        <img src="~/images/VendorIcons/special.png" width="50" height="50">
+                        <div class="box-text">
+                            <div class="vendor-number">@ViewBag.NotificationSpecialCategories.Count</div>
+                            <div>Special Category</div>
+                        </div>
+                    </div>
+                    <button class="view-button" onclick="showVendorModalFor(8);">View Vendors</button>
+                </div>
+                <div class="box">
+                    <div class="box-body">
+                        <img src="~/images/VendorIcons/other.png" width="50" height="50">
+                        <div class="box-text">
+                            <div class="vendor-number">@ViewBag.NotificationOther.Count</div>
+                            <div>Other</div>
+                        </div>
+                    </div>
+                    <button class="view-button" onclick="showVendorModalFor(9);">View Vendors</button>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 20px;"></div>
+        </div>
+    </div>
+    <div class="row" style="background-color: white; margin: auto;">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin: 20px auto auto auto;">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <span style="color: #4F9AD2; font-size: 20px;">Vendor Management</span>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 10px;"></div>
+            <div id="data-graph" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="graph-box">
+                    <div class="graph-header">
+                        <span class="graph-title">Audit Cycle</span>
+                        <select id="auditYear">
+                            <option value="1">2024</option>
+                            <option value="2">2025</option>
+                        </select>
+                    </div>
+                    <div class="graph-body">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 10px;"></div>
+                        <p>Audit your vendors on an annual basis.</p>
+                        <div id="barchart" class="chartArea"><div style="position: relative;"><div style="position: relative; width: 500px; height: 250px;" dir="ltr"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;" aria-label="A chart."><svg width="500" height="250" style="overflow: hidden;" aria-label="A chart."><defs id="_ABSTRACT_RENDERER_ID_0"><clipPath id="_ABSTRACT_RENDERER_ID_1"><rect x="84" y="19" width="333" height="213"></rect></clipPath></defs><rect x="0" y="0" width="500" height="250" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><rect x="84" y="19" width="333" height="213" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(https://urisq-development2.azurewebsites.net/Company/ControllerDashboard#_ABSTRACT_RENDERER_ID_1)"><g><rect x="84" y="231" width="333" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="84" y="160" width="333" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="84" y="90" width="333" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="84" y="19" width="333" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="84" y="196" width="333" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="84" y="125" width="333" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="84" y="54" width="333" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect></g><g><rect x="100" y="77" width="52" height="154" stroke="none" stroke-width="0" fill="#3366cc"></rect><rect x="183" y="175" width="52" height="56" stroke="none" stroke-width="0" fill="#3366cc"></rect><rect x="266" y="77" width="52" height="154" stroke="none" stroke-width="0" fill="#3366cc"></rect><rect x="349" y="20" width="52" height="211" stroke="none" stroke-width="0" fill="#3366cc"></rect></g><g><rect x="84" y="231" width="333" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g></g><g></g><g><g><text text-anchor="middle" x="126" y="244.85" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#222222">Q1</text></g><g><text text-anchor="middle" x="209" y="244.85" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#222222">Q2</text></g><g><text text-anchor="middle" x="292" y="244.85" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#222222">Q3</text></g><g><text text-anchor="middle" x="375" y="244.85" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#222222">Q4</text></g><g><text text-anchor="end" x="73" y="235.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#444444">0</text></g><g><text text-anchor="end" x="73" y="164.6833" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#444444">5</text></g><g><text text-anchor="end" x="73" y="94.0167" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#444444">10</text></g><g><text text-anchor="end" x="73" y="23.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#444444">15</text></g></g></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th>Quarter</th><th>Value</th></tr></thead><tbody><tr><td>Q1</td><td>11</td></tr><tr><td>Q2</td><td>4</td></tr><tr><td>Q3</td><td>11</td></tr><tr><td>Q4</td><td>15</td></tr></tbody></table></div></div></div><div style="display: none; position: absolute; top: 260px; left: 510px; white-space: nowrap; font-family: Arial; font-size: 11px;" aria-hidden="true">...</div><div></div></div></div>
+                    </div>
+                </div>
+                <div class="graph-box">
+                    <div class="graph-header" style="padding-bottom: 8px;">
+                        <span class="graph-title">Vendor Criticality</span>
+                    </div>
+                    <div class="graph-body">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 52px;"></div>
+                        <div id="barchart2" class="chartArea"><div style="position: relative;"><div style="position: relative; width: 500px; height: 250px;" dir="ltr"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;" aria-label="A chart."><svg width="500" height="250" style="overflow: hidden;" aria-label="A chart."><defs id="_ABSTRACT_RENDERER_ID_2"><clipPath id="_ABSTRACT_RENDERER_ID_3"><rect x="84" y="19" width="333" height="213"></rect></clipPath></defs><rect x="0" y="0" width="500" height="250" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><rect x="84" y="19" width="333" height="213" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(https://urisq-development2.azurewebsites.net/Company/ControllerDashboard#_ABSTRACT_RENDERER_ID_3)"><g><rect x="84" y="231" width="333" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="84" y="178" width="333" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="84" y="125" width="333" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="84" y="72" width="333" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="84" y="19" width="333" height="1" stroke="none" stroke-width="0" fill="#cccccc"></rect><rect x="84" y="205" width="333" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="84" y="152" width="333" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="84" y="99" width="333" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect><rect x="84" y="46" width="333" height="1" stroke="none" stroke-width="0" fill="#ebebeb"></rect></g><g><rect x="106" y="179" width="68" height="52" stroke="#eb4f4f" stroke-width="1" fill="#eb4f4f"></rect><rect x="216" y="62" width="69" height="169" stroke="#f7963f" stroke-width="1" fill="#f7963f"></rect><rect x="327" y="179" width="68" height="52" stroke="#fdcd53" stroke-width="1" fill="#fdcd53"></rect></g><g><rect x="84" y="231" width="333" height="1" stroke="none" stroke-width="0" fill="#333333"></rect></g></g><g></g><g><g><text text-anchor="middle" x="139.83333333333334" y="244.85" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#222222">High</text></g><g><text text-anchor="middle" x="250.5" y="244.85" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#222222">Medium</text></g><g><text text-anchor="middle" x="361.1666666666667" y="244.85" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#222222">Low</text></g><g><text text-anchor="end" x="73" y="235.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#444444">0</text></g><g><text text-anchor="end" x="73" y="182.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#444444">10</text></g><g><text text-anchor="end" x="73" y="129.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#444444">20</text></g><g><text text-anchor="end" x="73" y="76.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#444444">30</text></g><g><text text-anchor="end" x="73" y="23.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#444444">40</text></g></g></g><g></g></svg><div aria-label="A tabular representation of the data in the chart." style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"><table><thead><tr><th>Critical</th><th>Value</th></tr></thead><tbody><tr><td>High</td><td>10</td></tr><tr><td>Medium</td><td>32</td></tr><tr><td>Low</td><td>10</td></tr></tbody></table></div></div></div><div style="display: none; position: absolute; top: 260px; left: 510px; white-space: nowrap; font-family: Arial; font-size: 11px;" aria-hidden="true">40</div><div></div></div></div>
+                    </div>
+                </div>
+                <div class="graph-box">
+                    <div class="graph-header">
+                        <span class="graph-title">Notifications</span>
+                        <select id="notification">
+                            <option value="1">Assessments</option>
+                            <option value="2">Audits</option>
+                            <option value="3">Contract Review</option>
+                        </select>
+                    </div>
+                    <div class="graph-body">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 10px;"></div>
+                        <div id="assessmentsData">
+                            <p style="font-weight: bold;">ASSESSMENTS NEEDED</p>
+                            <div class="notifsection">
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=12308bfe-cc5d-4ab9-87ec-3319b6219b68">10/10/2020 &nbsp;&nbsp;Vendor Test 2</a></p>
+                            </div>
+                        </div>
+                        <div id="auditsData" style="display: none;">
+                            <p style="font-weight: bold;">AUDITS NEEDED</p>
+                            <div class="notifsection">
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=3661a49d-3463-4c29-83a5-28d0bd3d9fe5">7/4/2019 &nbsp;&nbsp;Vendor Test 4</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=cb409cb2-df23-4838-a7a3-0a86f8583e45">10/1/2019 &nbsp;&nbsp;Vendor Test 107</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=ed0b107a-12f3-4240-a722-ee3a11e1e20d">9/11/2020 &nbsp;&nbsp;Vendor Test 3</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=c4f98a98-d6b8-4420-87eb-57b9b96de58a">10/8/2020 &nbsp;&nbsp;Vendor Test 111</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=e064678c-490b-4adf-abdc-4c833a2f566e">1/6/2021 &nbsp;&nbsp;Vendor Test 420</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=8504d8a3-61a0-43fd-acb9-53e0cae60969">1/20/2021 &nbsp;&nbsp;Vendor Test 143</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=f349414b-aedf-4ef1-87ba-25b7e5b4115a">1/23/2021 &nbsp;&nbsp;Vendor Test 241</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=f244480d-f9cd-43cf-892c-e2e3a2628c36">1/27/2021 &nbsp;&nbsp;Vendor Test 422</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=cefa95f2-ed7f-46de-83ba-e0af174e75a7">1/30/2021 &nbsp;&nbsp;Vendor Test 421</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=570d6c5e-6c95-43d3-ad4d-04d8c2df6a58">1/30/2021 &nbsp;&nbsp;Vendor Test 428</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=2796ce0a-3307-4c01-8435-df24d7b5a540">11/4/2021 &nbsp;&nbsp;Vendor Test 565</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=fbe5f6cf-658a-44a5-b37b-b0d9ae9ceb8e">12/14/2021 &nbsp;&nbsp;Vendor Test 138</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=73cd6dc5-27e7-4fe0-b9c2-841e9d25b024">1/4/2022 &nbsp;&nbsp;Vendor Test 603</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=a248d0af-739c-4f48-a28a-390e415fa3e9">4/21/2022 &nbsp;&nbsp;Vendor Test 622</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=c11239c1-79cb-4a03-bc9e-afec72d4d4be">9/29/2022 &nbsp;&nbsp;past semi-annual vendor...</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=5a1d0482-36d0-4653-ad2d-643c31dfe687">5/24/2024 &nbsp;&nbsp;LOOOOOOOOOOONG</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=fad8ebdb-9be4-477a-ae59-03391fce5dbd">6/15/2024 &nbsp;&nbsp;Monthly vendor 6</a></p>
+                            </div>
+                        </div>
+                        <div id="contractReviewData" style="display: none;">
+                            <p style="font-weight: bold;">CONTRACT REVIEWS NEEDED</p>
+                            <div class="notifsection">
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=12f52093-ae04-4a1e-a4ed-c0fa7ad0d9da">7/23/2021 &nbsp;&nbsp;Vendor Test 1</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=12308bfe-cc5d-4ab9-87ec-3319b6219b68">7/25/2021 &nbsp;&nbsp;Vendor Test 2</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=ed0b107a-12f3-4240-a722-ee3a11e1e20d">9/18/2021 &nbsp;&nbsp;Vendor Test 3</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=3661a49d-3463-4c29-83a5-28d0bd3d9fe5">9/18/2021 &nbsp;&nbsp;Vendor Test 4</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=c4f98a98-d6b8-4420-87eb-57b9b96de58a">10/11/2021 &nbsp;&nbsp;Vendor Test 111</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=cb409cb2-df23-4838-a7a3-0a86f8583e45">10/11/2021 &nbsp;&nbsp;Vendor Test 107</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=f349414b-aedf-4ef1-87ba-25b7e5b4115a">1/21/2022 &nbsp;&nbsp;Vendor Test 241</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=8504d8a3-61a0-43fd-acb9-53e0cae60969">1/21/2022 &nbsp;&nbsp;Vendor Test 143</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=7af133b8-1857-4eed-bda2-631521bd624d">1/23/2022 &nbsp;&nbsp;Vendor Test 341</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=b6d0f89c-781d-44e6-96bb-bb91280e1fa5">1/24/2022 &nbsp;&nbsp;Vendor Test 426169er</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=0d1a836a-c9fc-48ae-8562-12fb99f86430">1/24/2022 &nbsp;&nbsp;Vendor Test 419</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=e064678c-490b-4adf-abdc-4c833a2f566e">1/24/2022 &nbsp;&nbsp;Vendor Test 420</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=cefa95f2-ed7f-46de-83ba-e0af174e75a7">1/24/2022 &nbsp;&nbsp;Vendor Test 421</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=f244480d-f9cd-43cf-892c-e2e3a2628c36">1/24/2022 &nbsp;&nbsp;Vendor Test 422</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=570d6c5e-6c95-43d3-ad4d-04d8c2df6a58">1/24/2022 &nbsp;&nbsp;Vendor Test 428</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=c308e4d4-5c5b-455a-ae83-4efca3ca168c">2/5/2022 &nbsp;&nbsp;Vendor Test 460</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=363ac1c5-dfe1-4458-b253-6bcaec6b52a7">10/26/2022 &nbsp;&nbsp;Vendor Test 548</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=efddb890-50cb-4595-9642-e195754a5475">10/26/2022 &nbsp;&nbsp;Vendor Test 549</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=7769b443-21e0-4600-b94a-b6d75065bc82">10/26/2022 &nbsp;&nbsp;Vendor Test 552</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=2796ce0a-3307-4c01-8435-df24d7b5a540">11/13/2022 &nbsp;&nbsp;Vendor Test 565</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=73cd6dc5-27e7-4fe0-b9c2-841e9d25b024">1/8/2023 &nbsp;&nbsp;Vendor Test 603</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=9e33e8f7-bed3-4f85-a159-523c346682bc">3/28/2023 &nbsp;&nbsp;Bi-Annual Vendor</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=c11239c1-79cb-4a03-bc9e-afec72d4d4be">3/29/2023 &nbsp;&nbsp;past semi-annual vendor...</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=a248d0af-739c-4f48-a28a-390e415fa3e9">4/30/2023 &nbsp;&nbsp;Vendor Test 622</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=e94c468d-29a1-41f0-982c-cecd83c6c9e8">7/1/2023 &nbsp;&nbsp;Vendor Test 627</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=f6ae32f0-2776-4dce-8d75-5c06ab2d23e1">3/15/2024 &nbsp;&nbsp;Test Vendor Low</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=fbe5f6cf-658a-44a5-b37b-b0d9ae9ceb8e">3/22/2024 &nbsp;&nbsp;Vendor Test 138</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=2ad7a8bc-5d8c-4fa1-afd4-c9dbdd308c32">4/27/2024 &nbsp;&nbsp;Monthly Vendor</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=c0c33bcb-23ca-4deb-b095-64a833120b82">5/1/2024 &nbsp;&nbsp;Brtest</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=5a1d0482-36d0-4653-ad2d-643c31dfe687">5/1/2024 &nbsp;&nbsp;LOOOOOOOOOOONG</a></p>
+                                <p><a class="notf-link" href="https://urisq-development2.azurewebsites.net/Company/UpdateVendor/?recordId=0da5fe9b-4798-401d-b9ec-0380af720542">6/27/2024 &nbsp;&nbsp;Vendor Test 634</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- start: Modal -->
+<div class="modal modal-primary fade" id="ModalCategoryVendorListing" role="dialog">
+    <div class="modal-dialog" style="border: 5px solid #E6E6E6; ">
+        <div class="modal-content" style="border-radius: 0px; border: none;">
+            <div class="modal-header" style="border-radius: 0px; background-color: #005B94; color: white; padding: .5rem; text-align: center;">
+                <div class="modal-title" id="ModalCategoryVendorListingTitle" style="font-size: 16px; font-weight:700; text-align: center; margin: auto auto;">
+                    <div id="CategoryTitleImage">
+
+                    </div>
+                    <span class="close" title="Dismiss" data-dismiss="modal" aria-hidden="true" style="position: absolute; top: 32px; right: 35px; padding: 0 !important; max-height: 16px !important; line-height: 16px; font-weight: 500; text-shadow: none; opacity: 1.0; color: white; background-color: transparent;">&times;</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="" id="ModalCategoryVendorListingBodyHeader" style="min-height: 40px; max-height: 400px; overflow-y: auto; overflow-x: hidden;">
+
+                </div>
+                <div class="" id="ModalCategoryVendorListingBody" style="max-height: 400px; overflow-y: auto; overflow-x: hidden;">
+
+                </div>
+            </div>
+            <div class="modal-footer text-center" style="border: none; padding-top: 0;">
+                <div id="ResendAuditEmailToVendorButton" class="text-center yellowbuttons" style="display: none; margin-right: 15px;">
+                    <a class="submit">Resend</a>
+                </div>
+                <div id="ResendAssessmenttEmailToVendorButton" class="text-center yellowbuttons" style="display: none; margin-left: 15px; margin-right: 15px;">
+                    <a class="submit">Resend</a>
+                </div>
+                <div class="text-center yellowbuttons" data-dismiss="modal" style="margin: auto;">
+                    <a class="submit">Close</a>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- end: Modal -->
+
+@section Scripts {
+    <script>
+        function showVendorModalFor(value) {
+            var result = null;
+            var imgurlstring = "";
+            var catagory = "";
+            if (value == "0") {
+                result = @Html.Raw(Json.Serialize(ViewBag.NotificationContactInformation));
+                catagory = "Contact Information";
+                imgurlstring = "<img src='/Content/images/VendorIcons/contact-info.png' width='40' height='40'> <span>Contact Information</span>";
+            }
+            if (value == "1") {
+                result = @Html.Raw(Json.Serialize(ViewBag.NotificationGeneralInformation));
+                catagory = "General Information";
+                imgurlstring = "<img src='/Content/images/VendorIcons/general-info.png' width='40' height='40'> <span>General Information</span>";
+            }
+            if (value == "2") {
+                result = @Html.Raw(Json.Serialize(ViewBag.NotificationFinancialData));
+                catagory = "Financial Data";
+                imgurlstring = "<img src='/Content/images/VendorIcons/finacial-data.png' width='40' height='40'> <span>Financial Data</span>";
+            }
+            if (value == "3") {
+                result = @Html.Raw(Json.Serialize(ViewBag.NotificationIdentificationNumbers));
+                catagory = "ID Numbers";
+                imgurlstring = "<img src='/Content/images/VendorIcons/id-numbers.png' width='40' height='40'> <span>ID Numbers</span>";
+            }
+            if (value == "4") {
+                result = @Html.Raw(Json.Serialize(ViewBag.NotificationWebBrowsingData));
+                catagory = "Web Browsing";
+                imgurlstring = "<img src='/Content/images/VendorIcons/web-browsing.png' width='40' height='40'> <span>Web Browsing</span>";
+            }
+            if (value == "5") {
+                result = @Html.Raw(Json.Serialize(ViewBag.NotificationHumanResources));
+                catagory = "Human Resources";
+                imgurlstring = "<img src='/Content/images/VendorIcons/human-resources.png' width='40' height='40'> <span>Human Resources</span>";
+            }
+            if (value == "6") {
+                result = @Html.Raw(Json.Serialize(ViewBag.NotificationMedicalHealth));
+                catagory = "Medical/Insurance";
+                imgurlstring = "<img src='/Content/images/VendorIcons/medical-insurance.png' width='40' height='40'> <span>Medical/Insurance</span>";
+            }
+            if (value == "7") {
+                result = @Html.Raw(Json.Serialize(ViewBag.NotificationBiometricGenetic));
+                catagory = "Biometric/Genetic";
+                imgurlstring = "<img src='/Content/images/VendorIcons/biometric.png' width='40' height='40'> <span>Biometric/Genetic</span>";
+            }
+            if (value == "8") {
+                result = @Html.Raw(Json.Serialize(ViewBag.NotificationSpecialCategories));
+                catagory = "Special Category";
+                imgurlstring = "<img src='/Content/images/VendorIcons/special.png' width='40' height='40'> <span>Special Category</span>";
+            }
+            if (value == "9") {
+                result = @Html.Raw(Json.Serialize(ViewBag.NotificationOther));
+                catagory = "Other";
+                imgurlstring = "<img src='/Content/images/VendorIcons/other.png' width='40' height='40'> <span>Other</span>";
+            }
+            var trow = "";
+            var row = "";            
+            if (result.length > 0) {
+                var headertext = "'" + catagory + "' data is shared with the following vendors:";
+                trow += "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='min-height: 40px; width: 100%;'>";
+                trow += headertext + "</div > ";
+                $.each(result, function (index, item) {
+                    row += "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-top: 10px; min-height: 25px; max-height: 25px; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>";
+                    row += result[index].VendorName + "<a style='cursor: pointer; float: right; text-decoration: underline; text-decoration-color: #005B94; color: #005B94;' href='" + result[index].VendorEditURL + "'>VIEW</a></div > ";
+                });
+                row += "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-top: 40px; min-height: 5px; max-height: 5px; min-width: 100%; max-width: 100%;'></div>";
+            }
+            else {
+                var headertext = catagory + " data is shared with the following vendors:";
+                trow += "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='min-height: 40px; width: 100%;'>";
+                trow += headertext + "</div > ";
+                row += "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style='margin-top: 10px; min-height: 50px; max-height: 50px; min-width: 100%; max-width: 100%;'>No Vendors Listed</div > ";
+            }
+
+            $("#CategoryTitleImage").html(imgurlstring);
+            $("#ModalCategoryVendorListingBodyHeader").html(trow);
+            $("#ModalCategoryVendorListingBody").html(row);
+            $("#ModalCategoryVendorListing").modal('show');
+        }
+    </script>
+}

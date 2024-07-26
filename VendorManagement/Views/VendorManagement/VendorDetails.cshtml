@@ -1,0 +1,283 @@
+﻿@model VendorManagement.Models.ViewModels.VendorDetailsViewModel
+
+<link rel="stylesheet" href="~/css/Views/VendorManagement/Vendors.css" />
+
+<div class="section px-5">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left">
+        <span style="color: #4F9AD2; font-size: 20px;">Vendor Details</span>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left" style="height: 20px;"></div>
+    <div class="candidate-list-box card mt-4">
+        <div class="p-4 card-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="candidate-list-content mt-3 mt-lg-0">
+                        <h5 class="fs-19 mb-0">
+                          <span>@Model.Vendor.VendorName</span>
+                            @if (Model.Vendor.CriticalityLevelId == 1)
+                            {
+                                <span class="badge ms-1" style="background: #fdcd53;">@Model.Vendor.CriticalityLevel.Level</span>
+                            }
+                            else if (Model.Vendor.CriticalityLevelId == 2)
+                            {
+                                <span class="badge ms-1" style="background: #f7963f;">@Model.Vendor.CriticalityLevel.Level</span>
+                            }
+                            else if (Model.Vendor.CriticalityLevelId == 3)
+                            {
+                                <span class="badge ms-1" style="background: #eb4f4f;">@Model.Vendor.CriticalityLevel.Level</span>
+                            }
+                        </h5>
+                        <p class="text-muted mb-2">@Model.Vendor.VendorType.Type</p>
+                        <ul class="list-inline mb-0 text-muted">
+                            <li class="list-inline-item"><i class="mdi mdi-email"></i>@Model.Vendor.DepartmentalOwnerEmail</li>
+                        </ul>
+                        <ul class="list-inline mb-0 text-muted">
+                            <li class="list-inline-item"><i class="mdi mdi-wallet"></i>Contract Cycle: @Model.Vendor.ContractCycle.ContractCycleType</li>
+                            <li class="list-inline-item"><i class="mdi mdi-wallet"></i>Audit Cycle: @Model.Vendor.AuditCycle.AuditCycleType</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="fs-19 mb-0">Shared Data</h5>
+                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                        @foreach (var vendorSharedData in Model.Vendor.VendorSharedData)
+                        {
+                            <span class="badge bg-soft-secondary fs-14 mt-1">@vendorSharedData.SharedData</span>
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="fs-19 mb-0">Contract Date</h5>
+                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                        <span class="badge bg-soft-secondary fs-14 mt-1">@Model.Vendor.ContractDate.ToShortDateString()</span>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="fs-19 mb-0">Last Audit Date</h5>
+                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                        <span class="badge bg-soft-secondary fs-14 mt-1">@Model.Vendor.AuditDate.ToShortDateString()</span>
+                    </div>
+                </div>   
+                <div class="col-lg-2 align-self-center">
+                    <a class="badge bg-soft-primary fs-14 mt-1" href="" data-bs-toggle="modal" data-bs-target="#editVendorModal">Edit</a>
+                </div>
+            </div>            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h5 class="card-title fs-19">Audits</h5>
+                            <div class="mt-2">
+                                <a class="badge bg-soft-primary fs-14 mt-1" href="" vendor-id="@Model.Vendor.VendorId" vendor-name="@Model.Vendor.VendorName" data-bs-toggle="modal" data-bs-target="#addAuditModal">Add New Audit</a>
+                            </div>
+                            <table id="auditsTable" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Audit Date</th>
+                                        <th>Shared Data</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var audit in Model.Audits)
+                                    {
+                                        <tr>
+                                            <td>@audit.AuditDate.ToShortDateString()</td>
+                                            <td>
+                                                @foreach (var vendorSharedData in audit.VendorSharedData)
+                                                {
+                                                    <span class="badge bg-soft-secondary fs-14">@vendorSharedData.SharedData</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h5 class="card-title fs-19">Assigned Assessments</h5>
+                            <div class="mt-2">                                
+                                <a class="badge bg-soft-primary fs-14 mt-1" href="" vendor-id="@Model.Vendor.VendorId" data-bs-toggle="modal" data-bs-target="#assignAssessmentModal">Assign New Assessment</a>
+                            </div>
+                            <table id="assessmentsTable" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Assessment</th>
+                                        <th>Assigned Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var assignedAssessment in Model.AssignedAssessments)
+                                    {
+                                        <tr>
+                                            <td>@assignedAssessment.Assessment.Title</td>
+                                            <td>@assignedAssessment.AssignmentDate.ToShortDateString()</td>
+                                            <td>@assignedAssessment.Status</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- assignAssessmentModal -->
+<div class="modal fade" id="assignAssessmentModal" tabindex="-1" aria-labelledby="assignAssessmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="assignAssessmentModalLabel">Assign New Assessment</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="AssignAssessment" method="post">
+                    <input id="VendorId" type="hidden" asp-for="SelectedVendorId" value="@Model.Vendor.VendorId" />
+                    <div class="form-group mb-3">                       
+                        <label asp-for="SelectedAssessmentId" class="form-label">Select Assessment</label>
+                        <select asp-for="SelectedAssessmentId" asp-items="@(new SelectList(Model.Assessments, "AssessmentId", "Title"))" class="form-control"></select>
+
+                    </div>                    
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" value="Assign Assessment" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- addAuditModal -->
+<div class="modal fade" id="addAuditModal" tabindex="-1" aria-labelledby="addAuditModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addAuditModalLabel">Add New Audit</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="AddAudit" method="post">
+                    <input id="VendorId" type="hidden" asp-for="SelectedVendorId" />
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Vendor Name</label>
+                        <input id="VendorName" type="text" class="form-control" readonly />
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="NewAuditDate" class="form-label">Audit Date</label>
+                        <input asp-for="NewAuditDate" class="form-control" readonly />
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="SelectedVendorSharedDataIds" class="form-label">Shared Data</label>
+                        <select asp-for="SelectedVendorSharedDataIds" asp-items="@(new SelectList(Model.VendorSharedData, "VendorSharedDataId", "SharedData"))" class="form-control"></select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" value="Add Audit" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- editVendorModal -->
+<div class="modal fade" id="editVendorModal" tabindex="-1" aria-labelledby="editVendorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="editVendorModalLabel">Edit Vendor</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="EditVendor" method="post">
+                    <input id="VendorId" type="hidden" asp-for="VendorId" />
+                    <div class="form-group mb-3">
+                        <label asp-for="VendorName" class="form-label">Vendor Name</label>
+                        <input asp-for="VendorName" class="form-control" />
+                        <span asp-validation-for="VendorName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="VendorContactEmail" class="form-label">Vendor Contact Email</label>
+                        <input asp-for="VendorContactEmail" class="form-control" />
+                        <span asp-validation-for="VendorContactEmail" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="DepartmentalOwnerEmail" class="form-label">Departmental Owner Email</label>
+                        <input asp-for="DepartmentalOwnerEmail" class="form-control" />
+                        <span asp-validation-for="DepartmentalOwnerEmail" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ContractDate" class="form-label">Contract Date</label>
+                        <input asp-for="ContractDate" class="form-control" />
+                        <span asp-validation-for="ContractDate" class="text-danger"></span>
+                    </div>                    
+                    <div class="form-group mb-3">
+                        <div>
+                            <span asp-validation-for="SelectedContractCycleId" class="text-danger"></span>
+                        </div>
+                        <label asp-for="SelectedContractCycleId" class="form-label">Contract Cycle</label>
+                        <select asp-for="SelectedContractCycleId" asp-items="@(new SelectList(Model.ContractCycles ?? new List<VendorManagement.Models.Entities.ContractCycle>(), "ContractCycleId", "ContractCycleType"))" class="form-control"></select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <div>
+                            <span asp-validation-for="SelectedAuditCycleId" class="text-danger"></span>
+                        </div>
+                        <label asp-for="SelectedAuditCycleId" class="form-label">Audit Cycle</label>
+                        <select asp-for="SelectedAuditCycleId" asp-items="@(new SelectList(Model.AuditCycles ?? new List<VendorManagement.Models.Entities.AuditCycle>(), "AuditCycleId", "AuditCycleType"))" class="form-control"></select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <div>
+                            <span asp-validation-for="SelectedCriticalityLevelId" class="text-danger"></span>
+                        </div>
+                        <label asp-for="SelectedCriticalityLevelId" class="form-label">Criticality Level</label>
+                        <select asp-for="SelectedCriticalityLevelId" asp-items="@(new SelectList(Model.CriticalityLevels ?? new List<VendorManagement.Models.Entities.CriticalityLevel>(), "CriticalityLevelId", "Level"))" class="form-control"></select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <div>
+                            <span asp-validation-for="SelectedVendorTypeId" class="text-danger"></span>
+                        </div>
+                        <label asp-for="SelectedVendorTypeId" class="form-label">Vendor Type</label>
+                        <select asp-for="SelectedVendorTypeId" asp-items="@(new SelectList(Model.VendorTypes ?? new List<VendorManagement.Models.Entities.VendorType>(), "VendorTypeId", "Type"))" class="form-control"></select>
+                    </div>                   
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" value="Save Changes" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            let auditTable = new DataTable('#auditsTable');
+            let assessmentTable = new DataTable('#assessmentsTable');         
+        });
+        var addAuditModal = document.getElementById('addAuditModal');
+        addAuditModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; // Button that triggered the modal
+            var vendorId = button.getAttribute('vendor-id'); // Extract info from data-* attributes
+            var vendorName = button.getAttribute('vendor-name');           
+            var modal = addAuditModal;
+            modal.querySelector('#VendorId').value = vendorId;
+            modal.querySelector('#VendorName').value = vendorName;
+        });
+    </script>
+}

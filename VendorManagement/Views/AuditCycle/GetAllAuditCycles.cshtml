@@ -1,0 +1,46 @@
+﻿@model List<VendorManagement.Models.Entities.AuditCycle>
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>All Audit Cycles</h1>
+    </div>
+</div>
+
+
+<div class="container py-5">
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>AuditCycleId</th>
+                    <th>AuditCycleType</th>                                  
+                    <th></th>                                  
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var AuditCycle in Model)
+                {
+                    <tr>
+                        <td>@AuditCycle.AuditCycleId</td>
+                        <td>@AuditCycle.AuditCycleType</td>                        
+                        <td>
+                            <a asp-area=""
+                               asp-controller="AuditCycle"
+                               asp-action="EditAuditCycle"
+                               asp-route-id="@AuditCycle.AuditCycleId">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No AuditCycle Found!</p>
+    }
+</div>

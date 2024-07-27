@@ -24,7 +24,7 @@
             </div>
             <div class="navbar-content" style="color: white;">
                 <ul class="pc-navbar">
-                    <li>
+                    @* <li>
                         <div class="icon-link">
                             <i class="fa-duotone fa-shield-quartered" style="font-size: 17px; margin-left: 6px;" aria-hidden="true"></i>
                             <a>THREAT SCANNING</a>
@@ -89,7 +89,7 @@
                                 <a>Settings</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> *@
                     <li>
                         <div class="icon-link">
                             <i class="fa-regular fa-v" style="font-size: 17px; margin-left: 6px;" aria-hidden="true"></i>
@@ -111,7 +111,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                   @*  <li>
                         <div class="icon-link">
                             <i class="fa-duotone fa-clapperboard-play" style="font-size: 17px; margin-left: 6px;" aria-hidden="true"></i>
                             <a>TRAINING</a>
@@ -223,7 +223,7 @@
                                 <a style="color:white;" asp-area="" asp-controller="CriticalityLevel" asp-action="AddCriticalityLevel">Add Criticality Level</a>
                             </li>                                                    
                         </ul>
-                    </li>
+                    </li> *@
                 </ul>
             </div>
             <div class="bottom-section">               
@@ -311,33 +311,33 @@
             });
         });
 
-        document.getElementById('sidebarMenu').addEventListener('click', function (event) {
-            const target = event.target;
-            if (target.classList.contains('icon-link') || target.closest('.icon-link')) {
-                const iconLink = target.closest('.icon-link');
-                const subMenu = iconLink.nextElementSibling;
-                const arrowIcon = iconLink.querySelector('.fa-angle-down');
-                const allSubMenus = document.querySelectorAll('.pc-subnavbar');
-                const allArrows = document.querySelectorAll('.fa-angle-down');
+        // document.getElementById('sidebarMenu').addEventListener('click', function (event) {
+        //     const target = event.target;
+        //     if (target.classList.contains('icon-link') || target.closest('.icon-link')) {
+        //         const iconLink = target.closest('.icon-link');
+        //         const subMenu = iconLink.nextElementSibling;
+        //         const arrowIcon = iconLink.querySelector('.fa-angle-down');
+        //         const allSubMenus = document.querySelectorAll('.pc-subnavbar');
+        //         const allArrows = document.querySelectorAll('.fa-angle-down');
 
-                // Check if the clicked submenu is already open
-                const isSubMenuOpen = subMenu.style.display === 'block';
+        //         // Check if the clicked submenu is already open
+        //         const isSubMenuOpen = subMenu.style.display === 'block';
 
-                // Close all submenus and reset arrows
-                allSubMenus.forEach(menu => {
-                    menu.style.display = 'none';
-                });
-                allArrows.forEach(icon => {
-                    icon.classList.remove('fa-angle-up');
-                });
+        //         // Close all submenus and reset arrows
+        //         allSubMenus.forEach(menu => {
+        //             menu.style.display = 'none';
+        //         });
+        //         allArrows.forEach(icon => {
+        //             icon.classList.remove('fa-angle-up');
+        //         });
 
-                // Toggle the clicked submenu
-                if (!isSubMenuOpen) {
-                    subMenu.style.display = 'block';
-                    arrowIcon.classList.add('fa-angle-up');
-                }
-            }
-        });
+        //         // Toggle the clicked submenu
+        //         if (!isSubMenuOpen) {
+        //             subMenu.style.display = 'block';
+        //             arrowIcon.classList.add('fa-angle-up');
+        //         }
+        //     }
+        // });
     </script>
 
 

@@ -132,7 +132,7 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
-    display: none;
+    /*display: none;*/
 }
 
 .subsidenav__list-item {
@@ -146,10 +146,6 @@
     padding: 15px 15px 15px 15px;
     border-bottom: 1px solid #005082;
     cursor: pointer;
-}
-
-.pc-subnavbar {
-    display: none;
 }
 
 .icon-link-submenu {

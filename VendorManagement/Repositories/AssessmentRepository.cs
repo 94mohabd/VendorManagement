@@ -33,8 +33,8 @@ namespace VendorManagement.Repositories
         {
             return await VMDbContext.Assessments
                  .Include(a => a.AssessmentItems)
-                     .ThenInclude(ai => ai.AssessmentAnswers)
-                 .Include(a => a.AssignedAssessments)
+                      .ThenInclude(ai => ai.AssessmentAnswers)
+                  .Include(a => a.AssignedAssessments)
                  .FirstOrDefaultAsync(a => a.AssessmentId == id);
         }
 

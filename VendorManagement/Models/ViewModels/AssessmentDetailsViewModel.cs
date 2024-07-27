@@ -12,6 +12,7 @@ namespace VendorManagement.Models.ViewModels
         public DateTime CreateDate { get; set; }
         public int SelectedVendorId { get; set; }
         public IEnumerable<Vendor> Vendors { get; set; }
+        public ICollection<Vendor> AssignedVendors { get; set; }
         public IEnumerable<AssessmentItem> OrderedItems { get; set; } // New property
 
     }

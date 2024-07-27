@@ -21,16 +21,13 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="candidate-list-content mt-3 mt-lg-0">
-                        <div class="fs-19 mb-0">
-                            <h5 class="fs-19 mb-0">Assessment Title</h5>
-                            <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
-                                <span class="badge bg-soft-secondary fs-14 mt-1">@Model.Title</span>
-                            </div>
+                        <h5 class="fs-19 mb-0">
+                            <span>@Model.Title</span>
                             @if (Model.IsTemplate)
                             {
                                 <span class="badge ms-1" style="background: #fdcd53;">Template</span>
                             }
-                        </div>
+                        </h5>
                     </div>
                 </div>
                 <div class="col-lg-2">
@@ -38,7 +35,7 @@
                     <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
                         @if (Model.AssignedAssessmentCount > 0)
                         {
-                            <span class="badge bg-soft-secondary fs-14 mt-1">@Model.AssignedAssessmentCount @(Model.AssignedAssessmentCount > 1 ? "Vendors" : "Vendor")</span>
+                            <a href="#" class="badge bg-soft-secondary fs-14 mt-1" data-bs-toggle="modal" data-bs-target="#assignAssessmentsListModal">@Model.AssignedAssessmentCount @(Model.AssignedAssessmentCount > 1 ? "Vendors" : "Vendor")</a>
                         }
                         else
                         {
@@ -111,6 +108,84 @@
                         <input type="submit" value="Assign Assessment" class="btn btn-primary" />
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- assignAssessmentsListModal -->
+<div class="modal fade" id="assignAssessmentsListModal" tabindex="-1" aria-labelledby="assignAssessmentsListModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="assignAssessmentsListModalLabel">Assigned Vendors for @Model.Title</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="section px-5">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 float-left" style="height: 20px;"></div>
+                    <div class="row">
+                        @foreach (var vendor in Model.AssignedVendors)
+                        {
+                            <div class="candidate-list-box card">
+                                <a class="row-link" asp-controller="VendorManagement" asp-action="VendorDetails" asp-route-vendorId="@vendor.VendorId">
+                                    <div class="p-4 card-body">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="candidate-list-content mt-3 mt-lg-0">
+                                                    <h5 class="fs-19 mb-0">
+                                                        <span>@vendor.VendorName</span>
+                                                        @if (vendor.CriticalityLevelId == 1)
+                                                        {
+                                                            <span class="badge ms-1" style="background: #fdcd53;">@vendor.CriticalityLevel.Level</span>
+                                                        }
+                                                        else if (vendor.CriticalityLevelId == 2)
+                                                        {
+                                                            <span class="badge ms-1" style="background: #f7963f;">@vendor.CriticalityLevel.Level</span>
+                                                        }
+                                                        else if (vendor.CriticalityLevelId == 3)
+                                                        {
+                                                            <span class="badge ms-1" style="background: #eb4f4f;">@vendor.CriticalityLevel.Level</span>
+                                                        }
+                                                    </h5>
+                                                    <p class="text-muted mb-2">@vendor.VendorType.Type</p>
+                                                    <ul class="list-inline mb-0 text-muted">
+                                                        <li class="list-inline-item"><i class="mdi mdi-email"></i>@vendor.DepartmentalOwnerEmail</li>
+                                                    </ul>
+                                                    <ul class="list-inline mb-0 text-muted">
+                                                        <li class="list-inline-item"><i class="mdi mdi-wallet"></i>Contract Cycle: @vendor.ContractCycle.ContractCycleType</li>
+                                                        <li class="list-inline-item"><i class="mdi mdi-wallet"></i>Audit Cycle: @vendor.AuditCycle.AuditCycleType</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <h5 class="fs-19 mb-0">Shared Data</h5>
+                                                <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                                    @foreach (var VendorSharedData in vendor.VendorSharedData)
+                                                    {
+                                                        <span class="badge bg-soft-secondary fs-14 mt-1">@VendorSharedData.SharedData</span>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <h5 class="fs-19 mb-0">Contract Date</h5>
+                                                <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                                    <span class="badge bg-soft-secondary fs-14 mt-1" href="#">@vendor.ContractDate.ToShortDateString()</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <h5 class="fs-19 mb-0">Last Audit Date</h5>
+                                                <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                                    <span class="badge bg-soft-secondary fs-14 mt-1" href="#">@vendor.AuditDate.ToShortDateString()</span>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }                        
+                    </div>
+                </div>
             </div>
         </div>
     </div>

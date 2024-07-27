@@ -294,6 +294,7 @@ namespace VendorManagement.Controllers
                 {
                     Title = request.Title,
                     CreateDate = DateTime.Now,
+                    IsTemplate = true,
                     AssessmentItems = new List<AssessmentItem>() // Initialize the AssessmentItems collection
                 };
 
@@ -369,7 +370,8 @@ namespace VendorManagement.Controllers
             var viewModel = new AssessmentDetailsViewModel
             {
                 Vendors = await vendorRepository.GetAllVendorsAsync(),
-                AssignedAssessmentCount = assessment.AssignedAssessments.Count,
+                AssignedAssessmentCount = assessment.AssignedAssessments.Select(aa => aa.Vendor).Distinct().Count(),
+                AssignedVendors = assessment.AssignedAssessments.Select(aa => aa.Vendor).Distinct().ToList(),
                 AssessmentId = assessmentId,
                 Assessment = assessment,
                 IsTemplate = assessment.IsTemplate,
@@ -398,7 +400,7 @@ namespace VendorManagement.Controllers
                 await assignedAssessmentRepository.AddAssignedAssessmentAsync(assignedAssessment);
             }
 
-            return RedirectToAction("AssessmentDetails", "Assessments", new { assessmentId = model.AssessmentId });
+            return RedirectToAction("VendorDetails", "VendorManagement", new { vendorId = model.SelectedVendorId });
         }
     }
 }

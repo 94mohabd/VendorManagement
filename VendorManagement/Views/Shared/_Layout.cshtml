@@ -97,18 +97,26 @@
                             <i id="arrow" class="fa-regular fa-angle-down" aria-hidden="true"></i>
                         </div>
                         <ul class="pc-subnavbar">
+                            <a asp-controller="VendorManagement" asp-action="Dashboard">
                             <li class="subsidenav__list-item">
-                                <a style="color:white;" asp-controller="VendorManagement" asp-action="Dashboard">Dashboard</a>
+                                <span style="color:white;">Dashboard</span>
                             </li>
+                            </a>
+                            <a asp-controller="VendorManagement" asp-action="Vendors">
                             <li class="subsidenav__list-item">
-                                <a style="color:white;" asp-controller="VendorManagement" asp-action="Vendors">Vendors</a>
+                                <span style="color:white;">Vendors</span>
                             </li>
+                            </a>
+                            <a asp-controller="Assessments" asp-action="Index">
                             <li class="subsidenav__list-item">
-                                <a style="color:white;" asp-controller="Assessments" asp-action="Index">Assessments</a>
-                            </li>                            
-                            <li class="subsidenav__list-item">
-                                <a style="color:white;" asp-controller="Assessments" asp-action="CreateAssessment">Create Assessment</a>
+                                <span style="color:white;">Assessments</span>
                             </li>
+                            </a>
+                            <a asp-controller="Assessments" asp-action="CreateAssessment">
+                            <li class="subsidenav__list-item">
+                                <span style="color:white;">Create Assessment</span>
+                            </li>
+                            </a>
                         </ul>
                     </li>
                    @*  <li>

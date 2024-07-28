@@ -93,13 +93,53 @@
                                                     <div class="col-lg-2">
                                                         <h5 class="fs-19 mb-0">Contract Date</h5>
                                                         <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
-                                                            <span class="badge bg-soft-secondary fs-14 mt-1" href="#">@vendor.ContractDate.ToShortDateString()</span>
+                                                            <span class="badge bg-soft-secondary fs-14 mt-1" href="#">@vendor.ContractDate.ToShortDateString()</span>                                                            
+                                                        </div>
+                                                        <h5 class="fs-19 mb-0">Contract Status</h5>
+                                                        <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                                            @if (vendor.ContractCategoryStatus == 0)
+                                                            {
+                                                                <span class="badge bg-danger fs-14 mt-1" href="#">@vendor.ContractStatus</span>
+                                                            }
+                                                            else if (vendor.ContractCategoryStatus == 30)
+                                                            {
+                                                                <span class="badge bg-warning fs-14 mt-1" href="#">@vendor.ContractStatus</span>
+
+                                                            }
+                                                            else if (vendor.ContractCategoryStatus == 60)
+                                                            {
+                                                                <span class="badge bg-info fs-14 mt-1" href="#">@vendor.ContractStatus</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge bg-primary fs-14 mt-1" href="#">@vendor.ContractStatus</span>
+                                                            }
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2">
-                                                        <h5 class="fs-19 mb-0">Last Audit Date</h5>
+                                                        <h5 class="fs-19 mb-0">Audit Date</h5>
                                                         <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
                                                             <span class="badge bg-soft-secondary fs-14 mt-1" href="#">@vendor.AuditDate.ToShortDateString()</span>
+                                                        </div>
+                                                        <h5 class="fs-19 mb-0">Audit Status</h5>
+                                                        <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                                            @if (vendor.AuditCategoryStatus == 0)
+                                                            {
+                                                                <span class="badge bg-danger fs-14 mt-1" href="#">@vendor.AuditStatus</span>
+                                                            }
+                                                            else if (vendor.AuditCategoryStatus == 30)
+                                                            {
+                                                                <span class="badge bg-warning fs-14 mt-1" href="#">@vendor.AuditStatus</span>
+
+                                                            }
+                                                            else if (vendor.AuditCategoryStatus == 60)
+                                                            {
+                                                                <span class="badge bg-info fs-14 mt-1" href="#">@vendor.AuditStatus</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge bg-primary fs-14 mt-1" href="#">@vendor.AuditStatus</span>
+                                                            }
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-2">

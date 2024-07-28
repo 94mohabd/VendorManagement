@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VendorManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class initdb : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,7 +35,8 @@ namespace VendorManagement.Migrations
                 {
                     AuditCycleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AuditCycleType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AuditCycleType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AuditCyclePeriod = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,7 +49,8 @@ namespace VendorManagement.Migrations
                 {
                     ContractCycleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ContractCycleType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ContractCycleType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContractCyclePeriod = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -180,6 +182,14 @@ namespace VendorManagement.Migrations
                     DepartmentalOwnerEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContractDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AuditDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AuditDueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ContractDueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ContractStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AuditStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContractCategoryStatus = table.Column<int>(type: "int", nullable: false),
+                    AuditCategoryStatus = table.Column<int>(type: "int", nullable: false),
+                    ContractDaysUntilExpiration = table.Column<double>(type: "float", nullable: false),
+                    AuditDaysUntilExpiration = table.Column<double>(type: "float", nullable: false),
                     ContractCycleId = table.Column<int>(type: "int", nullable: false),
                     AuditCycleId = table.Column<int>(type: "int", nullable: false),
                     CriticalityLevelId = table.Column<int>(type: "int", nullable: false),
@@ -352,26 +362,26 @@ namespace VendorManagement.Migrations
 
             migrationBuilder.InsertData(
                 table: "AuditCycles",
-                columns: new[] { "AuditCycleId", "AuditCycleType" },
+                columns: new[] { "AuditCycleId", "AuditCyclePeriod", "AuditCycleType" },
                 values: new object[,]
                 {
-                    { 1, "Monthly" },
-                    { 2, "Quarterly" },
-                    { 3, "Semi-Annual" },
-                    { 4, "Annual" },
-                    { 5, "Bi-Annual" }
+                    { 1, 1, "Monthly" },
+                    { 2, 3, "Quarterly" },
+                    { 3, 6, "Semi-Annual" },
+                    { 4, 12, "Annual" },
+                    { 5, 24, "Bi-Annual" }
                 });
 
             migrationBuilder.InsertData(
                 table: "ContractCycles",
-                columns: new[] { "ContractCycleId", "ContractCycleType" },
+                columns: new[] { "ContractCycleId", "ContractCyclePeriod", "ContractCycleType" },
                 values: new object[,]
                 {
-                    { 1, "Monthly" },
-                    { 2, "Quarterly" },
-                    { 3, "Semi-Annual" },
-                    { 4, "Annual" },
-                    { 5, "Bi-Annual" }
+                    { 1, 1, "Monthly" },
+                    { 2, 3, "Quarterly" },
+                    { 3, 6, "Semi-Annual" },
+                    { 4, 12, "Annual" },
+                    { 5, 24, "Bi-Annual" }
                 });
 
             migrationBuilder.InsertData(

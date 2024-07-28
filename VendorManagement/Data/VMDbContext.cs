@@ -36,20 +36,20 @@ namespace VendorManagement.Data
 
             // Seed data for AuditCycles
             modelBuilder.Entity<AuditCycle>().HasData(
-                new AuditCycle { AuditCycleId = 1, AuditCycleType = "Monthly" },
-                new AuditCycle { AuditCycleId = 2, AuditCycleType = "Quarterly" },
-                new AuditCycle { AuditCycleId = 3, AuditCycleType = "Semi-Annual" },
-                new AuditCycle { AuditCycleId = 4, AuditCycleType = "Annual" },
-                new AuditCycle { AuditCycleId = 5, AuditCycleType = "Bi-Annual" }               
+                new AuditCycle { AuditCycleId = 1, AuditCyclePeriod = 1, AuditCycleType = "Monthly" },
+                new AuditCycle { AuditCycleId = 2, AuditCyclePeriod = 3, AuditCycleType = "Quarterly" },
+                new AuditCycle { AuditCycleId = 3, AuditCyclePeriod = 6, AuditCycleType = "Semi-Annual" },
+                new AuditCycle { AuditCycleId = 4, AuditCyclePeriod = 12, AuditCycleType = "Annual" },
+                new AuditCycle { AuditCycleId = 5, AuditCyclePeriod = 24, AuditCycleType = "Bi-Annual" }               
             );
 
             // Seed data for ContractCycle
             modelBuilder.Entity<ContractCycle>().HasData(
-                new ContractCycle { ContractCycleId = 1, ContractCycleType = "Monthly" },
-                new ContractCycle { ContractCycleId = 2, ContractCycleType = "Quarterly" },
-                new ContractCycle { ContractCycleId = 3, ContractCycleType = "Semi-Annual" },
-                new ContractCycle { ContractCycleId = 4, ContractCycleType = "Annual" },
-                new ContractCycle { ContractCycleId = 5, ContractCycleType = "Bi-Annual" }
+                new ContractCycle { ContractCycleId = 1, ContractCyclePeriod = 1, ContractCycleType = "Monthly" },
+                new ContractCycle { ContractCycleId = 2, ContractCyclePeriod = 3, ContractCycleType = "Quarterly" },
+                new ContractCycle { ContractCycleId = 3, ContractCyclePeriod = 6, ContractCycleType = "Semi-Annual" },
+                new ContractCycle { ContractCycleId = 4, ContractCyclePeriod = 12, ContractCycleType = "Annual" },
+                new ContractCycle { ContractCycleId = 5, ContractCyclePeriod = 24, ContractCycleType = "Bi-Annual" }
             );
 
             // Seed data for QuestionTypes

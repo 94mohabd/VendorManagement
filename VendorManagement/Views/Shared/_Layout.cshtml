@@ -258,7 +258,7 @@
                 <span>
                     <i class="fa fa-question-circle" title="Help Center" style="cursor: pointer; font-size: 20px; padding-top: 12px; color: white;" onclick="window.open('https://help.csrcyberprivacy.net/', '_blank');" aria-hidden="true"></i><span class="sr-only">Help Center</span>
                     <i>&nbsp;&nbsp;</i>
-                    <i class="fa fa-user-circle" id="useraccounticon" title="" style="cursor: pointer; font-size: 20px; padding-top: 12px; color: white;" href="#" data-trigger="hover" data-toggle="popover" data-content="<ul id='acct-popover-content' style='list-style: none; background-color: #005b94; color: white; margin: 0 0 0 0;'><li><a href='https://urisq-development2.azurewebsites.net/Manage/MyAccount'>Profile Settings</a></li><li><a href='https://urisq-development2.azurewebsites.net/Account/LogOff'>Sign Out</a></li></ul> b-x3j3vhp4j6" aria-hidden="true" data-original-title="User Settings"></i><span class="sr-only">User Settings</span>
+                    <i class="fa fa-user-circle" id="useraccounticon" title="" style="cursor: pointer; font-size: 20px; padding-top: 12px; color: white;" href="#" data-trigger="hover" data-toggle="popover" data-content="<ul id='acct-popover-content' style='list-style: none; background-color: #005b94; color: white; margin: 0 0 0 0;'><li><a href='#'>Profile Settings</a></li><li><a href='#'>Sign Out</a></li></ul> b-x3j3vhp4j6" aria-hidden="true" data-original-title="User Settings"></i><span class="sr-only">User Settings</span>
                 </span>
             </div>
         </div>
@@ -307,13 +307,13 @@
             var currentPath = window.location.pathname;
 
             // Find all sidebar links
-            var links = document.querySelectorAll('.pc-subnavbar .subsidenav__list-item a');
+            var links = document.querySelectorAll('.pc-subnavbar a');
 
             // Loop through the links and add 'active' class to the matching link
             links.forEach(function (link) {
                 var href = link.getAttribute('href');              ;
-                if (currentPath === href) {
-                    link.parentElement.classList.add('active');
+                if (currentPath === href) {                    
+                    link.firstElementChild.classList.add('active');
                     link.closest('.pc-subnavbar').style.display = 'block';
                 }
             });

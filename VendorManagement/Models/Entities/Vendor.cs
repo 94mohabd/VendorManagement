@@ -9,6 +9,18 @@
         public DateTime ContractDate { get; set; }
         public DateTime AuditDate { get; set; }
 
+        public DateTime AuditDueDate { get; set; }
+        public DateTime ContractDueDate { get; set; }
+
+        public string ContractStatus { get; set; }
+        public string AuditStatus { get; set; }
+
+        public int ContractCategoryStatus { get; set; }
+        public int AuditCategoryStatus { get; set; }
+
+        public Double ContractDaysUntilExpiration { get; set; }
+        public Double AuditDaysUntilExpiration { get; set; }
+
         public int ContractCycleId { get; set; }
         public virtual ContractCycle ContractCycle { get; set; }
 
@@ -26,7 +38,7 @@
         public ICollection<AssignedAssessment> AssignedAssessments { get; set; }
         public Vendor()
         {
-            VendorSharedData = new List<VendorSharedData>();
-        }
+            VendorSharedData = new List<VendorSharedData>();            
+        }       
     }
 }

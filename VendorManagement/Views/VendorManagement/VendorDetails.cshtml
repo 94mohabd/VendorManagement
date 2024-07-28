@@ -51,11 +51,81 @@
                     <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
                         <span class="badge bg-soft-secondary fs-14 mt-1">@Model.Vendor.ContractDate.ToShortDateString()</span>
                     </div>
+                    <h5 class="fs-19 mb-0">Contract Due Date</h5>
+                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                        <span class="badge bg-soft-secondary fs-14 mt-1">@Model.Vendor.ContractDueDate.ToShortDateString()</span>
+                    </div>
+                    <h5 class="fs-19 mb-0">Contract Status</h5>
+                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                        @if (Model.Vendor.ContractCategoryStatus == 0)
+                        {
+                            <span class="badge bg-danger fs-14 mt-1" href="#">@Model.Vendor.ContractStatus</span>
+                        }
+                        else if (Model.Vendor.ContractCategoryStatus == 30)
+                        {
+                            <span class="badge bg-warning fs-14 mt-1" href="#">@Model.Vendor.ContractStatus</span>
+
+                        }
+                        else if (Model.Vendor.ContractCategoryStatus == 60)
+                        {
+                            <span class="badge bg-info fs-14 mt-1" href="#">@Model.Vendor.ContractStatus</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-primary fs-14 mt-1" href="#">@Model.Vendor.ContractStatus</span>
+                        }
+                    </div>
+                    <h5 class="fs-19 mb-0">Days Until Expiration</h5>
+                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                        @if (Model.Vendor.ContractCategoryStatus == 0)
+                        {
+                            <span class="badge bg-soft-secondary fs-14 mt-1" href="#">@Math.Abs(Model.Vendor.ContractDaysUntilExpiration)</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-soft-secondary fs-14 mt-1" href="#">@Model.Vendor.ContractDaysUntilExpiration</span>
+                        }
+                    </div>
                 </div>
                 <div class="col-lg-2">
-                    <h5 class="fs-19 mb-0">Last Audit Date</h5>
+                    <h5 class="fs-19 mb-0">Audit Date</h5>
                     <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
                         <span class="badge bg-soft-secondary fs-14 mt-1">@Model.Vendor.AuditDate.ToShortDateString()</span>
+                    </div>
+                    <h5 class="fs-19 mb-0">Audit Due Date</h5>
+                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                        <span class="badge bg-soft-secondary fs-14 mt-1">@Model.Vendor.AuditDueDate.ToShortDateString()</span>
+                    </div>
+                    <h5 class="fs-19 mb-0">Audit Status</h5>
+                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                        @if (Model.Vendor.AuditCategoryStatus == 0)
+                        {
+                            <span class="badge bg-danger fs-14 mt-1" href="#">@Model.Vendor.AuditStatus</span>
+                        }
+                        else if (Model.Vendor.AuditCategoryStatus == 30)
+                        {
+                            <span class="badge bg-warning fs-14 mt-1" href="#">@Model.Vendor.AuditStatus</span>
+
+                        }
+                        else if (Model.Vendor.AuditCategoryStatus == 60)
+                        {
+                            <span class="badge bg-info fs-14 mt-1" href="#">@Model.Vendor.AuditStatus</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-primary fs-14 mt-1" href="#">@Model.Vendor.AuditStatus</span>
+                        }                        
+                    </div>
+                    <h5 class="fs-19 mb-0">Days Until Expiration</h5>
+                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                        @if (Model.Vendor.AuditCategoryStatus == 0)
+                        {
+                            <span class="badge bg-soft-secondary fs-14 mt-1" href="#">@Math.Abs(Model.Vendor.AuditDaysUntilExpiration)</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-soft-secondary fs-14 mt-1" href="#">@Model.Vendor.AuditDaysUntilExpiration</span>
+                        }                        
                     </div>
                 </div>   
                 <div class="col-lg-2 align-self-center">

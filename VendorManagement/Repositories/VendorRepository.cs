@@ -68,5 +68,47 @@ namespace VendorManagement.Repositories
             }
             return existingVendor;
         }
+
+        public async Task UpdateVendorStatusesAsync()
+        {
+            var vendors = await GetAllVendorsAsync();
+
+            foreach (var vendor in vendors)
+            {
+                //vendor.AuditDueDate = vendor.AuditDate.AddMonths(vendor.AuditCycle.AuditCyclePeriod);
+                vendor.AuditStatus = GetExpirationStatus(vendor.AuditDate, vendor.AuditDueDate).status;
+                vendor.AuditCategoryStatus = GetExpirationStatus(vendor.AuditDate, vendor.AuditDueDate).category;
+                vendor.AuditDaysUntilExpiration = GetExpirationStatus(vendor.AuditDate, vendor.AuditDueDate).expDays;
+
+                //vendor.ContractDueDate = vendor.ContractDate.AddMonths(vendor.ContractCycle.ContractCyclePeriod);
+                vendor.ContractStatus = GetExpirationStatus(vendor.ContractDate, vendor.ContractDueDate).status;
+                vendor.ContractCategoryStatus = GetExpirationStatus(vendor.ContractDate, vendor.ContractDueDate).category;
+                vendor.ContractDaysUntilExpiration = GetExpirationStatus(vendor.ContractDate, vendor.ContractDueDate).expDays;
+
+                await EditVendorAsync(vendor);
+            }
+        }
+
+        private (string status, int category, Double expDays) GetExpirationStatus(DateTime currentDate, DateTime dueDate)
+        {
+            var daysUntilExpiration = (dueDate - currentDate).TotalDays;
+
+            if (daysUntilExpiration < 0)
+            {
+                return ("Overdue", 0, daysUntilExpiration);
+            }
+            else if (daysUntilExpiration <= 30)
+            {
+                return ("Expires in less than 30 days", 30, daysUntilExpiration);
+            }
+            else if (daysUntilExpiration <= 60)
+            {
+                return ("Expires in less than 60 days", 60, daysUntilExpiration);
+            }
+            else
+            {
+                return ("Valid", 1, daysUntilExpiration);
+            }
+        }
     }
 }

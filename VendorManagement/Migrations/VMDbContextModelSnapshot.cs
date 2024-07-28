@@ -256,6 +256,9 @@ namespace VendorManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuditCycleId"));
 
+                    b.Property<int>("AuditCyclePeriod")
+                        .HasColumnType("int");
+
                     b.Property<string>("AuditCycleType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -268,26 +271,31 @@ namespace VendorManagement.Migrations
                         new
                         {
                             AuditCycleId = 1,
+                            AuditCyclePeriod = 1,
                             AuditCycleType = "Monthly"
                         },
                         new
                         {
                             AuditCycleId = 2,
+                            AuditCyclePeriod = 3,
                             AuditCycleType = "Quarterly"
                         },
                         new
                         {
                             AuditCycleId = 3,
+                            AuditCyclePeriod = 6,
                             AuditCycleType = "Semi-Annual"
                         },
                         new
                         {
                             AuditCycleId = 4,
+                            AuditCyclePeriod = 12,
                             AuditCycleType = "Annual"
                         },
                         new
                         {
                             AuditCycleId = 5,
+                            AuditCyclePeriod = 24,
                             AuditCycleType = "Bi-Annual"
                         });
                 });
@@ -299,6 +307,9 @@ namespace VendorManagement.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContractCycleId"));
+
+                    b.Property<int>("ContractCyclePeriod")
+                        .HasColumnType("int");
 
                     b.Property<string>("ContractCycleType")
                         .IsRequired()
@@ -312,26 +323,31 @@ namespace VendorManagement.Migrations
                         new
                         {
                             ContractCycleId = 1,
+                            ContractCyclePeriod = 1,
                             ContractCycleType = "Monthly"
                         },
                         new
                         {
                             ContractCycleId = 2,
+                            ContractCyclePeriod = 3,
                             ContractCycleType = "Quarterly"
                         },
                         new
                         {
                             ContractCycleId = 3,
+                            ContractCyclePeriod = 6,
                             ContractCycleType = "Semi-Annual"
                         },
                         new
                         {
                             ContractCycleId = 4,
+                            ContractCyclePeriod = 12,
                             ContractCycleType = "Annual"
                         },
                         new
                         {
                             ContractCycleId = 5,
+                            ContractCyclePeriod = 24,
                             ContractCycleType = "Bi-Annual"
                         });
                 });
@@ -483,17 +499,43 @@ namespace VendorManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VendorId"));
 
+                    b.Property<int>("AuditCategoryStatus")
+                        .HasColumnType("int");
+
                     b.Property<int>("AuditCycleId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("AuditDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<double>("AuditDaysUntilExpiration")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("AuditDueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("AuditStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ContractCategoryStatus")
+                        .HasColumnType("int");
+
                     b.Property<int>("ContractCycleId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ContractDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("ContractDaysUntilExpiration")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("ContractDueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ContractStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CriticalityLevelId")
                         .HasColumnType("int");

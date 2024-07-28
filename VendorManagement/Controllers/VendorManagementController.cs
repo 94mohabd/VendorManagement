@@ -54,7 +54,8 @@ namespace VendorManagement.Controllers
             return View();
         }
         public async Task<IActionResult> Vendors()
-        {
+        {            
+            await this.vendorRepository.UpdateVendorStatusesAsync();
             var viewModel = new AddVendorViewModel
             {
                 ContractCycles = await contractCycleRepository.GetAllContractCyclesAsync(),
@@ -64,20 +65,24 @@ namespace VendorManagement.Controllers
                 VendorSharedData = await vendorSharedDataRepository.GetAllVendorSharedDataAsync(),
                 Vendors = await vendorRepository.GetAllVendorsAsync()
             };            
-            return View(viewModel);
+            return View(viewModel);            
         }
         [HttpPost]
         public async Task<IActionResult> Vendors(AddVendorViewModel model)
         {
+            await this.vendorRepository.UpdateVendorStatusesAsync();                        
+                                                          
             var newVendor = new Vendor
             {
                 VendorName = model.VendorName,
                 VendorContactEmail = model.VendorContactEmail,
                 DepartmentalOwnerEmail = model.DepartmentalOwnerEmail,
                 ContractDate = model.ContractDate,
-                AuditDate = model.AuditDate,
+                ContractStatus = "check",
+                AuditStatus = "check",
                 ContractCycle = await contractCycleRepository.GetContractCycleByIdAsync(model.SelectedContractCycleId),
-                AuditCycle = await auditCycleRepository.GetAuditCycleByIdAsync(model.SelectedAuditCycleId),
+                AuditDate = model.AuditDate,
+                AuditCycle = await auditCycleRepository.GetAuditCycleByIdAsync(model.SelectedAuditCycleId),                               
                 CriticalityLevel = await criticalityLevelRepository.GetCriticalityLevelByIdAsync(model.SelectedCriticalityLevelId),
                 VendorType = await vendorTypeRepository.GetVendorTypeByIdAsync(model.SelectedVendorTypeId),
             };
@@ -103,10 +108,11 @@ namespace VendorManagement.Controllers
                 VendorSharedData = await vendorSharedDataRepository.GetAllVendorSharedDataAsync(),
                 Vendors = await vendorRepository.GetAllVendorsAsync()
             };
-            return RedirectToAction("Vendors");
+            return RedirectToAction("Vendors");            
         }
         public async Task<IActionResult> VendorDetails(int vendorId)
         {
+            await this.vendorRepository.UpdateVendorStatusesAsync();
             var vendor = await vendorRepository.GetVendorByIdAsync(vendorId);
 
             if (vendor != null)
@@ -200,6 +206,6 @@ namespace VendorManagement.Controllers
             }
 
             return RedirectToAction("VendorDetails", "VendorManagement", new { vendorId = model.SelectedVendorId });
-        }
+        }        
     }
 }
